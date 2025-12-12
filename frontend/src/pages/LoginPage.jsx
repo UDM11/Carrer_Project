@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 import { 
   FaEye, 
   FaEyeSlash, 
@@ -28,6 +29,7 @@ const LoginPage = () => {
   const [isAnimated, setIsAnimated] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
+  const { login } = useUser();
 
   // Animation trigger
   useEffect(() => {
@@ -126,13 +128,12 @@ const LoginPage = () => {
         return;
       }
       
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify({
+      // Use context login function
+      login({
         email: formData.email,
         role: user.role,
-        name: user.name,
-        isLoggedIn: true
-      }));
+        name: user.name
+      });
       
       // Redirect based on role
       switch (user.role) {
