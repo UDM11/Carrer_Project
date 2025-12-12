@@ -6,10 +6,10 @@ import HomePage from './pages/HomePage';
 import NotFound from './pages/NotFound';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import StudentDashboard from './pages/StudentDashboard';
-import TrainerDashboard from './pages/TrainerDashboard';
-import CompanyDashboard from './pages/CompanyDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import Student from './pages/Student';
+import Trainer from './pages/Trainer';
+import Company from './pages/Company';
+import Admin from './pages/Admin';
 
 // Placeholder component for coming soon pages
 const ComingSoon = ({ title, icon, color = "blue" }) => (
@@ -41,10 +41,10 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/student-dashboard" element={<StudentDashboard />} />
-            <Route path="/trainer-dashboard" element={<TrainerDashboard />} />
-            <Route path="/company-dashboard" element={<CompanyDashboard />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/student" element={<Student />} />
+            <Route path="/trainer" element={<Trainer />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/premium" element={<ComingSoon title="Premium Subscription" icon={<span className="text-4xl">⭐</span>} color="yellow" />} />
             {/* Language routes */}
             <Route path="/language/:lang" element={<ComingSoon title="Language Settings" icon={<span className="text-4xl">🌐</span>} color="indigo" />} />

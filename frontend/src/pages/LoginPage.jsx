@@ -137,16 +137,16 @@ const LoginPage = () => {
       // Redirect based on role
       switch (user.role) {
         case 'student':
-          navigate('/student-dashboard');
+          navigate('/student');
           break;
         case 'trainer':
-          navigate('/trainer-dashboard');
+          navigate('/trainer');
           break;
         case 'company':
-          navigate('/company-dashboard');
+          navigate('/company');
           break;
         case 'admin':
-          navigate('/admin-dashboard');
+          navigate('/admin');
           break;
         default:
           navigate('/');
