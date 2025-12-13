@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGraduationCap, FaUser, FaBriefcase, FaTrophy, FaChalkboardTeacher, 
          FaUsers, FaGlobe, FaBars, FaTimes, FaChevronDown, FaSignInAlt, 
-         FaSearch, FaHeart, FaShoppingCart, FaComments, FaPhone, FaEnvelope, FaHome,
-         FaSignOutAlt, FaCog, FaBook, FaClipboardList, FaUserTie, FaBuilding,
-         FaChartBar, FaUserGraduate, FaUserShield } from 'react-icons/fa';
-import { useUser } from '../contexts/UserContext';
+         FaSearch, FaHeart, FaShoppingCart, FaComments, FaPhone, FaEnvelope, FaHome } from 'react-icons/fa';
 import "./css/Navbar.css";
 
 const Navbar = () => {
@@ -18,7 +15,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  const { user, isLoggedIn, userRole, logout } = useUser();
 
   // Make navbar sticky on scroll
   useEffect(() => {
@@ -102,79 +98,10 @@ const Navbar = () => {
     closeMobileMenu();
   };
 
-  // Handle logout
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-    closeMobileMenu();
-  };
-
-  // Get role-specific navigation items
-  const getRoleSpecificNavItems = () => {
-    if (!isLoggedIn) return [];
-    
-    const commonItems = [
-      { path: '/profile', label: 'My Profile', icon: <FaUser /> },
-      { path: '/settings', label: 'Settings', icon: <FaCog /> }
-    ];
-
-    switch (userRole) {
-      case 'student':
-        return [
-          { path: '/my-learning', label: 'My Learning', icon: <FaBook /> },
-          { path: '/my-projects', label: 'My Projects', icon: <FaClipboardList /> },
-          { path: '/certificates', label: 'Certificates', icon: <FaTrophy /> },
-          ...commonItems
-        ];
-      case 'trainer':
-        return [
-          { path: '/my-courses', label: 'My Courses', icon: <FaChalkboardTeacher /> },
-          { path: '/students', label: 'My Students', icon: <FaUserGraduate /> },
-          { path: '/earnings', label: 'Earnings', icon: <FaChartBar /> },
-          ...commonItems
-        ];
-      case 'company':
-        return [
-          { path: '/job-postings', label: 'Job Postings', icon: <FaBriefcase /> },
-          { path: '/candidates', label: 'Candidates', icon: <FaUsers /> },
-          { path: '/company-profile', label: 'Company Profile', icon: <FaBuilding /> },
-          ...commonItems
-        ];
-      case 'admin':
-        return [
-          { path: '/admin-dashboard', label: 'Dashboard', icon: <FaChartBar /> },
-          { path: '/manage-users', label: 'Manage Users', icon: <FaUsers /> },
-          { path: '/system-settings', label: 'System Settings', icon: <FaCog /> },
-          ...commonItems
-        ];
-      default:
-        return commonItems;
-    }
-  };
-
-  // Get user display info
-  const getUserDisplayInfo = () => {
-    if (!user) return { name: 'Guest', icon: <FaUser />, bgColor: 'bg-gray-100' };
-    
-    const roleIcons = {
-      student: <FaUserGraduate className="text-blue-600" />,
-      trainer: <FaChalkboardTeacher className="text-green-600" />,
-      company: <FaBuilding className="text-purple-600" />,
-      admin: <FaUserShield className="text-red-600" />
-    };
-    
-    const roleColors = {
-      student: 'bg-blue-50 border-blue-200',
-      trainer: 'bg-green-50 border-green-200',
-      company: 'bg-purple-50 border-purple-200',
-      admin: 'bg-red-50 border-red-200'
-    };
-    
-    return {
-      name: user.name || user.email,
-      icon: roleIcons[userRole] || <FaUser />,
-      bgColor: roleColors[userRole] || 'bg-gray-50 border-gray-200'
-    };
+  // Sample user data
+  const user = {
+    isLoggedIn: false,
+    role: null,
   };
 
   return (
@@ -368,49 +295,27 @@ const Navbar = () => {
               <FaSearch className="text-xl" />
             </button>
             
-            {isLoggedIn ? (
+            {user.isLoggedIn ? (
               <div className="relative group">
-                <button className={`flex items-center space-x-2 rounded-full p-2 border-2 hover:shadow-md transition-all duration-200 ${getUserDisplayInfo().bgColor}`}>
-                  {getUserDisplayInfo().icon}
-                  <span className="hidden md:block text-sm font-medium text-gray-700 max-w-24 truncate">
-                    {getUserDisplayInfo().name}
-                  </span>
-                  <FaChevronDown className="w-3 h-3 text-gray-500" />
+                <button className="flex items-center space-x-2 bg-blue-50 rounded-full p-2 hover:bg-blue-100">
+                  <FaUser className="text-blue-600" />
                 </button>
-                <div className="absolute right-0 mt-2 w-56 rounded-lg shadow-xl bg-white border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl bg-white border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="py-2">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">{userRole}</p>
-                      <p className="text-sm font-medium text-gray-900 truncate">{getUserDisplayInfo().name}</p>
-                    </div>
-                    {getRoleSpecificNavItems().map((item, index) => (
-                      <Link 
-                        key={index}
-                        to={item.path} 
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors"
-                      >
-                        <span className="mr-3">{item.icon}</span>
-                        {item.label}
-                      </Link>
-                    ))}
-                    <div className="border-t border-gray-100 mt-1">
-                      <button 
-                        onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                      >
-                        <FaSignOutAlt className="mr-3" />
-                        Logout
-                      </button>
-                    </div>
+                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">My Profile</Link>
+                    <Link to="/my-learning" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">My Learning</Link>
+                    <Link to="/my-project" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">My Projects</Link>
+                    <Link to="/cart" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Cart</Link>
+                    <Link to="/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Logout</Link>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <Link to="/login" className="text-gray-700 font-medium hover:text-blue-600 hidden md:block transition-colors">
+                <Link to="/login" className="text-gray-700 font-medium hover:text-blue-600 hidden md:block">
                   Login
                 </Link>
-                <Link to="/signup" className="bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-700 hidden md:block transition-colors">
+                <Link to="/signup" className="bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-700 hidden md:block">
                   Sign Up
                 </Link>
               </div>
@@ -690,45 +595,14 @@ const Navbar = () => {
               </div>
 
               <div className="pt-8 border-t border-gray-200 mt-6 fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
-                {isLoggedIn ? (
-                  <div className="space-y-3">
-                    <div className={`flex items-center p-3 rounded-lg border-2 ${getUserDisplayInfo().bgColor}`}>
-                      {getUserDisplayInfo().icon}
-                      <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-900">{getUserDisplayInfo().name}</p>
-                        <p className="text-xs text-gray-500 uppercase tracking-wide">{userRole}</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {getRoleSpecificNavItems().slice(0, 4).map((item, index) => (
-                        <div 
-                          key={index}
-                          onClick={() => handleMobileLinkClick(item.path)} 
-                          className="flex flex-col items-center p-2 text-gray-700 hover:bg-blue-50 rounded-lg cursor-pointer transition-colors"
-                        >
-                          {item.icon}
-                          <span className="text-xs mt-1">{item.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <button 
-                      onClick={handleLogout}
-                      className="w-full flex items-center justify-center py-3 text-red-600 font-medium border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
-                    >
-                      <FaSignOutAlt className="mr-2" />
-                      Logout
-                    </button>
+                <div className="flex space-x-2">
+                  <div onClick={() => handleMobileLinkClick('/login')} className="flex-1 text-center py-3 text-gray-700 font-medium border border-gray-300 rounded-lg cursor-pointer">
+                    Login
                   </div>
-                ) : (
-                  <div className="flex space-x-2">
-                    <div onClick={() => handleMobileLinkClick('/login')} className="flex-1 text-center py-3 text-gray-700 font-medium border border-gray-300 rounded-lg cursor-pointer transition-colors hover:bg-gray-50">
-                      Login
-                    </div>
-                    <div onClick={() => handleMobileLinkClick('/signup')} className="flex-1 text-center py-3 text-white font-medium bg-blue-600 rounded-lg cursor-pointer transition-colors hover:bg-blue-700">
-                      Sign Up
-                    </div>
+                  <div onClick={() => handleMobileLinkClick('/signup')} className="flex-1 text-center py-3 text-white font-medium bg-blue-600 rounded-lg cursor-pointer">
+                    Sign Up
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>

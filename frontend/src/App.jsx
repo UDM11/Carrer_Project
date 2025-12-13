@@ -1,99 +1,143 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './contexts/UserContext';
 import Navbar from './components/Navbar';
-import ProtectedRoute from './components/ProtectedRoute';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import NotFound from './pages/NotFound';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
-import Student from './pages/Student';
-import Trainer from './pages/Trainer';
-import Company from './pages/Company';
-import Admin from './pages/Admin';
-import Unauthorized from './pages/Unauthorized';
 
-// Placeholder component for coming soon pages
-const ComingSoon = ({ title, icon, color = "blue" }) => (
-  <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-    <div className="text-center max-w-md">
-      <div className={`w-24 h-24 bg-${color}-100 rounded-full flex items-center justify-center mx-auto mb-6`}>
-        {icon}
-      </div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
-      <p className="text-gray-600 mb-6">This feature is coming soon. Stay tuned for updates!</p>
-      <button 
-        onClick={() => window.history.back()}
-        className={`bg-${color}-600 text-white px-6 py-3 rounded-lg hover:bg-${color}-700 transition-colors duration-300`}
-      >
-        Go Back
-      </button>
-    </div>
-  </div>
-);
+// Import your page components
+import Home from './pages/Home';
+
+// About pages
+import About from './pages/about/About';
+import Blog from './pages/about/Blog';
+import Contact from './pages/about/Contact';
+import HowItsWork from './pages/about/HowItsWork';
+import Support from './pages/about/Support';
+
+// Category pages
+import Courses from './pages/Category/Courses';
+import Jobs from './pages/Category/Jobs';
+import Projects from './pages/Category/PraticeProjects';
+import Trainers from './pages/Category/Trainers';
+
+// Explore pages
+import Business from './pages/explore/Business';
+import CareerLaunch from './pages/explore/CareerLaunch';
+import Certifications from './pages/explore/Certifications';
+import Design from './pages/explore/Design';
+import Development from './pages/explore/Development';
+import ItSoftware from './pages/explore/ItSoftware';
+import LearnAI from './pages/explore/LearnAI';
+import Marketing from './pages/explore/Marketing';
+import RolePlay from './pages/explore/RolePlay';
+
+// Hire pages
+import BrowseStudentPortfolio from './pages/hire/BrowseStudentPortfolio';
+import FIndTalent from './pages/hire/FIndTalent';
+import FullTimesRoles from './pages/hire/FullTImesRoles';
+import Internships from './pages/hire/Internships';
+import ManageHiring from './pages/hire/ManageHiring';
+import PostJob from './pages/hire/PostJob';
+
+// Learn pages
+import AllCategory from './pages/learn/AllCategory';
+import Certified from './pages/learn/Certified';
+import Freeworkshops from './pages/learn/Freeworkshops';
+import MyLearning from './pages/learn/MyLearning';
+
+// Projects pages
+import BrowersProjects from './pages/projects/BrowersProjects';
+import CompanyPaid from './pages/projects/CompanyPaid';
+import Hackathon from './pages/projects/Hackathon';
+import Myproject from './pages/projects/Myproject';
+import PostProject from './pages/projects/PostProject';
+
+// Resources pages
+import CareerCenter from './pages/Resources/CareerCenter';
+import Help from './pages/Resources/Help';
+
+// Other pages
+import Cart from './pages/Cart';
+import Community from './pages/Community';
+import Complete from './pages/Complete';
+// import Favorite from './pages/Favorite';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import Signup from './pages/Signup';
+
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              
-              {/* Role-based protected routes */}
-              <Route path="/student" element={
-                <ProtectedRoute allowedRoles={['student']}>
-                  <Student />
-                </ProtectedRoute>
-              } />
-              <Route path="/trainer" element={
-                <ProtectedRoute allowedRoles={['trainer']}>
-                  <Trainer />
-                </ProtectedRoute>
-              } />
-              <Route path="/company" element={
-                <ProtectedRoute allowedRoles={['company']}>
-                  <Company />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin" element={
-                <ProtectedRoute allowedRoles={['admin']}>
-                  <Admin />
-                </ProtectedRoute>
-              } />
-              <Route path="/premium" element={<ComingSoon title="Premium Subscription" icon={<span className="text-4xl">⭐</span>} color="yellow" />} />
-              {/* Language routes */}
-              <Route path="/language/:lang" element={<ComingSoon title="Language Settings" icon={<span className="text-4xl">🌐</span>} color="indigo" />} />
-              {/* Role-specific placeholder routes */}
-              <Route path="/profile" element={<ComingSoon title="User Profile" icon={<span className="text-4xl">👤</span>} color="blue" />} />
-              <Route path="/settings" element={<ComingSoon title="Settings" icon={<span className="text-4xl">⚙️</span>} color="gray" />} />
-              <Route path="/my-learning" element={<ComingSoon title="My Learning" icon={<span className="text-4xl">📚</span>} color="green" />} />
-              <Route path="/my-projects" element={<ComingSoon title="My Projects" icon={<span className="text-4xl">📋</span>} color="purple" />} />
-              <Route path="/certificates" element={<ComingSoon title="Certificates" icon={<span className="text-4xl">🏆</span>} color="yellow" />} />
-              <Route path="/my-courses" element={<ComingSoon title="My Courses" icon={<span className="text-4xl">🎓</span>} color="blue" />} />
-              <Route path="/students" element={<ComingSoon title="My Students" icon={<span className="text-4xl">👥</span>} color="green" />} />
-              <Route path="/earnings" element={<ComingSoon title="Earnings" icon={<span className="text-4xl">💰</span>} color="green" />} />
-              <Route path="/job-postings" element={<ComingSoon title="Job Postings" icon={<span className="text-4xl">💼</span>} color="purple" />} />
-              <Route path="/candidates" element={<ComingSoon title="Candidates" icon={<span className="text-4xl">👔</span>} color="blue" />} />
-              <Route path="/company-profile" element={<ComingSoon title="Company Profile" icon={<span className="text-4xl">🏢</span>} color="purple" />} />
-              <Route path="/admin-dashboard" element={<ComingSoon title="Admin Dashboard" icon={<span className="text-4xl">📊</span>} color="red" />} />
-              <Route path="/manage-users" element={<ComingSoon title="Manage Users" icon={<span className="text-4xl">👥</span>} color="red" />} />
-              <Route path="/system-settings" element={<ComingSoon title="System Settings" icon={<span className="text-4xl">⚙️</span>} color="red" />} />
-              {/* Catch all unmatched routes */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </UserProvider>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            
+            {/* About routes */}
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/how-it-works" element={<HowItsWork />} />
+            <Route path="/support" element={<Support />} />
+            
+            {/* Category routes */}
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/trainers" element={<Trainers />} />
+            
+            {/* Explore routes */}
+            <Route path="/business" element={<Business />} />
+            <Route path="/career-launch" element={<CareerLaunch />} />
+            <Route path="/certifications" element={<Certifications />} />
+            <Route path="/design" element={<Design />} />
+            <Route path="/development" element={<Development />} />
+            <Route path="/it-software" element={<ItSoftware />} />
+            <Route path="/learn-ai" element={<LearnAI />} />
+            <Route path="/marketing" element={<Marketing />} />
+            <Route path="/role-play" element={<RolePlay />} />
+            
+            {/* Hire routes */}
+            <Route path="/browse-student-portfolio" element={<BrowseStudentPortfolio />} />
+            <Route path="/find-talent" element={<FIndTalent />} />
+            <Route path="/full-time-roles" element={<FullTimesRoles />} />
+            <Route path="/internships" element={<Internships />} />
+            <Route path="/manage-hiring" element={<ManageHiring />} />
+            <Route path="/post-job" element={<PostJob />} />
+            
+            {/* Learn routes */}
+            <Route path="/all-category" element={<AllCategory />} />
+            <Route path="/certified" element={<Certified />} />
+            <Route path="/free-workshops" element={<Freeworkshops />} />
+            <Route path="/my-learning" element={<MyLearning />} />
+            
+            {/* Projects routes */}
+            <Route path="/browse-projects" element={<BrowersProjects />} />
+            <Route path="/company-paid" element={<CompanyPaid />} />
+            <Route path="/hackathon" element={<Hackathon />} />
+            <Route path="/my-project" element={<Myproject />} />
+            <Route path="/post-project" element={<PostProject />} />
+            
+            {/* Resources routes */}
+            <Route path="/career-center" element={<CareerCenter />} />
+            <Route path="/help" element={<Help />} />
+            
+            {/* Other routes */}
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/complete" element={<Complete />} />
+            {/* <Route path="/favorite" element={<Favorite />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            
+            {/* Catch all route for 404 pages */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
