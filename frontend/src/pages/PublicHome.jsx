@@ -5,9 +5,7 @@ import {
   FaChevronLeft, FaChevronRight, FaQuoteLeft, FaAward,
   FaRocket, FaShieldAlt, FaClock, FaHandshake
 } from 'react-icons/fa';
-import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
-import Footer from '../components/Footer';
 
 const PublicHome = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -111,7 +109,6 @@ const PublicHome = () => {
 
   return (
     <div className="min-h-screen bg-white">
-        <Navbar />
       
       {/* Hero Section */}
       <HeroSection />
@@ -343,7 +340,6 @@ const PublicHome = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

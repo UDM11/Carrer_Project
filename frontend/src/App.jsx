@@ -64,6 +64,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import PublicHome from './pages/PublicHome';
 import Signup from './pages/Signup';
+import Wishlist from './pages/Wishlist';
 
 import Footer from './components/Footer';
 
@@ -72,6 +73,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
+          <Navbar />
           <main>
             <Routes>
               <Route path="/" element={<ProtectedRoute />} />
@@ -131,13 +133,15 @@ function App() {
             <Route path="/complete" element={<Complete />} />
             {/* <Route path="/favorite" element={<Favorite />} /> */}
             <Route path="/login" element={<Login />} />
-            <Route path="/public-home" element={<PublicHome />} />
+            <Route path="/" element={<PublicHome />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             
             {/* Catch all route for 404 pages */}
             <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
