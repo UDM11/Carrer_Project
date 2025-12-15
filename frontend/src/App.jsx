@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 
 // Import your page components
-import Home from './pages/DashboardHome';
 
 // About pages
 import About from './pages/about/About';
@@ -61,18 +62,19 @@ import Complete from './pages/Complete';
 // import Favorite from './pages/Favorite';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import PublicHome from './pages/PublicHome';
 import Signup from './pages/Signup';
 
 import Footer from './components/Footer';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <main>
+            <Routes>
+              <Route path="/" element={<ProtectedRoute />} />
             
             {/* About routes */}
             <Route path="/about" element={<About />} />
@@ -129,15 +131,16 @@ function App() {
             <Route path="/complete" element={<Complete />} />
             {/* <Route path="/favorite" element={<Favorite />} /> */}
             <Route path="/login" element={<Login />} />
+            <Route path="/public-home" element={<PublicHome />} />
             <Route path="/signup" element={<Signup />} />
             
             {/* Catch all route for 404 pages */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
