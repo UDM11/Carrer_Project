@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   GraduationCap, User, Briefcase, Trophy, Users, Globe, Menu, X, 
   ChevronDown, Search, Heart, ShoppingCart, MessageCircle, Phone, Mail, Home 
@@ -16,6 +17,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const headerRef = useRef(null);
+  const navigate = useNavigate();
 
   // Mock auth context
   const isAuthenticated = false;
@@ -111,7 +113,7 @@ const Navbar = () => {
   };
 
   const handleMobileLinkClick = (path) => {
-    console.log('Navigate to:', path);
+    navigate(path);
     closeMobileMenu();
   };
 
