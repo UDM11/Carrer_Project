@@ -379,7 +379,7 @@ const Navbar = () => {
 
                   <Link 
                     to="/signup"
-                    className="lg:hidden bg-gray-100 text-gray-600 font-medium px-3 py-2 rounded-lg hover:bg-gray-200 text-sm"
+                    className="lg:hidden bg-white text-black-400 font-bold px-3 py-2 rounded-lg text-lg"
                   >
                     Join
                   </Link>
