@@ -283,43 +283,43 @@ const PublicHome = () => {
               <div
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 transform hover:-translate-y-2 ${
+                className={`group relative bg-white rounded-2xl p-4 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 transform hover:-translate-y-2 ${
                   selectedCategory === category.id
                     ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 shadow-blue-200'
                     : 'border-transparent hover:border-blue-200'
                 }`}
               >
                 <div className="text-center">
-                  <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 transition-all duration-300 group-hover:scale-110 ${
+                  <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-20 sm:h-20 rounded-2xl mb-3 sm:mb-6 transition-all duration-300 group-hover:scale-110 ${
                     selectedCategory === category.id
                       ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg'
                       : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-600 group-hover:from-blue-100 group-hover:to-purple-100 group-hover:text-blue-600'
                   }`}>
-                    <category.icon className="text-3xl" />
+                    <category.icon className="text-xl sm:text-3xl" />
                   </div>
                   
-                  <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${
+                  <h3 className={`text-sm sm:text-xl font-bold mb-2 sm:mb-3 transition-colors duration-300 ${
                     selectedCategory === category.id ? 'text-blue-700' : 'text-gray-900 group-hover:text-blue-600'
                   }`}>
                     {category.name}
                   </h3>
                   
-                  <div className="flex items-center justify-center space-x-2 mb-4">
-                    <span className={`text-2xl font-bold ${
+                  <div className="flex items-center justify-center space-x-1 sm:space-x-2 mb-2 sm:mb-4">
+                    <span className={`text-lg sm:text-2xl font-bold ${
                       selectedCategory === category.id ? 'text-blue-600' : 'text-gray-700'
                     }`}>
                       {category.count}
                     </span>
-                    <span className="text-gray-500 text-sm">courses</span>
+                    <span className="text-gray-500 text-xs sm:text-sm">courses</span>
                   </div>
                   
-                  <div className={`inline-flex items-center text-sm font-medium transition-all duration-300 ${
+                  <div className={`inline-flex items-center text-xs sm:text-sm font-medium transition-all duration-300 ${
                     selectedCategory === category.id 
                       ? 'text-blue-600' 
                       : 'text-gray-500 group-hover:text-blue-600'
                   }`}>
                     Explore courses
-                    <FaArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
+                    <FaArrowRight className="ml-1 sm:ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
                 </div>
                 
@@ -361,7 +361,7 @@ const PublicHome = () => {
               </h2>
               <p className="text-gray-600">Courses that help you keep up with the latest trends</p>
             </div>
-            <Link to="/courses" className="text-blue-600 hover:text-blue-700 font-semibold flex items-center">
+            <Link to="/courses" className="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
               View all <FaArrowRight className="ml-2" />
             </Link>
           </div>
@@ -452,14 +452,6 @@ const PublicHome = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {learningPaths.map((path, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 group">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 ${
-                  path.color === 'blue' ? 'bg-blue-100 text-blue-600' :
-                  path.color === 'green' ? 'bg-green-100 text-green-600' :
-                  path.color === 'purple' ? 'bg-purple-100 text-purple-600' :
-                  'bg-orange-100 text-orange-600'
-                }`}>
-                  <path.icon className="text-2xl" />
-                </div>
                 
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{path.title}</h3>
                 <p className="text-gray-600 mb-4">{path.description}</p>
@@ -495,12 +487,7 @@ const PublicHome = () => {
                 
                 <Link 
                   to="/courses"
-                  className={`w-full inline-flex items-center justify-center px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                    path.color === 'blue' ? 'bg-blue-600 hover:bg-blue-700 text-white' :
-                    path.color === 'green' ? 'bg-green-600 hover:bg-green-700 text-white' :
-                    path.color === 'purple' ? 'bg-purple-600 hover:bg-purple-700 text-white' :
-                    'bg-orange-600 hover:bg-orange-700 text-white'
-                  }`}
+                  className="w-full inline-flex items-center justify-center px-4 py-3 rounded-lg font-semibold transition-all duration-300 bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   Start Learning <FaArrowRight className="ml-2" />
                 </Link>
@@ -522,7 +509,7 @@ const PublicHome = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {instructors.map((instructor, index) => (
-              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div key={index} className="bg-white rounded-2xl p-2 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div className="text-center mb-6">
                   <img 
                     src={instructor.avatar} 
