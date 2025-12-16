@@ -4,7 +4,59 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import { FaLinkedin, FaFacebook, FaGraduationCap, FaChalkboardTeacher, FaUserTie, FaBriefcase } from 'react-icons/fa';
 
+const RoleSelectionPopup = ({ onRoleSelect }) => {
+  return (
+    <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-10">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Join as a client or freelancer</h2>
+          <p className="text-gray-600">Choose your account type to get started</p>
+        </div>
+        
+        <div className="space-y-4 mb-8">
+          <button
+            onClick={() => onRoleSelect('client')}
+            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors text-left"
+          >
+            <div className="flex items-center">
+              <FaBriefcase className="text-blue-600 text-xl mr-3" />
+              <div>
+                <h3 className="font-semibold text-gray-800">I'm a client, hiring for a project</h3>
+                <p className="text-sm text-gray-600">Find skilled freelancers for your projects</p>
+              </div>
+            </div>
+          </button>
+          
+          <button
+            onClick={() => onRoleSelect('freelancer')}
+            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors text-left"
+          >
+            <div className="flex items-center">
+              <FaUserTie className="text-blue-600 text-xl mr-3" />
+              <div>
+                <h3 className="font-semibold text-gray-800">I'm a freelancer, looking for work</h3>
+                <p className="text-sm text-gray-600">Showcase your skills and find opportunities</p>
+              </div>
+            </div>
+          </button>
+        </div>
+        
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+              Log In
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Signup = () => {
+  const [showRoleSelection, setShowRoleSelection] = useState(true);
+  const [selectedUserType, setSelectedUserType] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -16,6 +68,11 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleRoleSelect = (userType) => {
+    setSelectedUserType(userType);
+    setShowRoleSelection(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +114,9 @@ const Signup = () => {
   const passwordStrength = getPasswordStrength(formData.password);
 
   return (
+    <>
+      {showRoleSelection && <RoleSelectionPopup onRoleSelect={handleRoleSelect} />}
+      
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="flex flex-col md:flex-row">
@@ -160,46 +220,7 @@ const Signup = () => {
                   </div>
                 </div>
                 
-                <div>
-                  <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-                    I am a
-                  </label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, role: 'student'})}
-                      className={`p-3 border rounded-lg flex items-center justify-center ${formData.role === 'student' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
-                    >
-                      <FaGraduationCap className={`mr-2 ${formData.role === 'student' ? 'text-blue-600' : 'text-gray-400'}`} />
-                      <span className={formData.role === 'student' ? 'text-blue-600 font-medium' : 'text-gray-600'}>Student</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, role: 'trainer'})}
-                      className={`p-3 border rounded-lg flex items-center justify-center ${formData.role === 'trainer' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
-                    >
-                      <FaChalkboardTeacher className={`mr-2 ${formData.role === 'trainer' ? 'text-blue-600' : 'text-gray-400'}`} />
-                      <span className={formData.role === 'trainer' ? 'text-blue-600 font-medium' : 'text-gray-600'}>Trainer</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, role: 'mentor'})}
-                      className={`p-3 border rounded-lg flex items-center justify-center ${formData.role === 'mentor' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
-                    >
-                      <FaUserTie className={`mr-2 ${formData.role === 'mentor' ? 'text-blue-600' : 'text-gray-400'}`} />
-                      <span className={formData.role === 'mentor' ? 'text-blue-600 font-medium' : 'text-gray-600'}>Mentor</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, role: 'employer'})}
-                      className={`p-3 border rounded-lg flex items-center justify-center ${formData.role === 'employer' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
-                    >
-                      <FaBriefcase className={`mr-2 ${formData.role === 'employer' ? 'text-blue-600' : 'text-gray-400'}`} />
-                      <span className={formData.role === 'employer' ? 'text-blue-600 font-medium' : 'text-gray-600'}>Employer</span>
-                    </button>
-                  </div>
-                </div>
-                
+
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                     Password
@@ -373,6 +394,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
